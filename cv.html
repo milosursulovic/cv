@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Miloš Uršulović</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root {
+    --paper: #eef0e9;
+    --surface: #e2e5db;
+    --surface-2: #d7dbcd;
+    --ink: #1b201c;
+    --muted: #5c655c;
+    --line: #cdd2c4;
+    --accent: #8a4f28;
+    --accent-strong: #6f3f1f;
+    --accent-soft: #e6d3bf;
+    --link: var(--accent);
+    --shadow: 0 1px 0 rgba(27, 32, 28, 0.05);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14170f;
+      --surface: #1b1f16;
+      --surface-2: #242a1d;
+      --ink: #e9ece1;
+      --muted: #9aa38f;
+      --line: #2d3325;
+      --accent: #e0975a;
+      --accent-strong: #f0ab73;
+      --accent-soft: #3a2c1c;
+      --shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #14170f;
+    --surface: #1b1f16;
+    --surface-2: #242a1d;
+    --ink: #e9ece1;
+    --muted: #9aa38f;
+    --line: #2d3325;
+    --accent: #e0975a;
+    --accent-strong: #f0ab73;
+    --accent-soft: #3a2c1c;
+    --shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    font-size: 16px;
+  }
+
+  a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 1.75rem 4rem; }
+
+  /* ---------- Nav ---------- */
+  nav.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .topnav-inner {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 0.85rem 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .topnav .brand {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+  }
+  .topnav .brand:hover { color: var(--accent); }
+  .topnav ul {
+    list-style: none; margin: 0; padding: 0;
+    display: flex; gap: 1.5rem;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.78rem;
+  }
+  .topnav ul a { color: var(--muted); }
+  .topnav ul a:hover { color: var(--accent); }
+
+  /* ---------- Hero ---------- */
+  .hero { padding: 3.25rem 0 3rem; border-bottom: 1px solid var(--line); }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr 168px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  @media (max-width: 640px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .portrait { order: -1; width: 112px; }
+  }
+
+  .role {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin: 0 0 0.6rem;
+  }
+
+  h1 {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2.1rem, 4.5vw, 2.9rem);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  .tagline {
+    margin: 1rem 0 0;
+    max-width: 58ch;
+    color: var(--muted);
+    font-size: 1.05rem;
+    text-wrap: balance;
+  }
+
+  .contact-row {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.9rem;
+    margin: 1.35rem 0 0;
+    padding: 0;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.82rem;
+  }
+  .contact-row li { display: flex; align-items: center; gap: 0.4rem; color: var(--muted); }
+  .contact-row li::before { content: "›"; color: var(--accent); }
+  .contact-row a { color: var(--ink); }
+  .contact-row a:hover { color: var(--accent); }
+
+  .portrait { margin: 0; width: 168px; }
+  .portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    filter: saturate(0.94);
+  }
+  .portrait figcaption {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  /* ---------- Sections generic ---------- */
+  section { padding: 3.25rem 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+
+  h2.eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1.5rem;
+  }
+
+  .about p { max-width: 66ch; font-size: 1.04rem; }
+  .about p + p { margin-top: 0.9rem; }
+
+  /* ---------- Timeline ---------- */
+  .timeline { list-style: none; margin: 0; padding-left: 1.7rem; border-left: 2px solid var(--line); display: grid; gap: 2.5rem; }
+  .timeline-item { position: relative; }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    top: 0.4rem;
+    left: calc(-1.7rem - 5px);
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .role-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.3rem 1rem; margin-bottom: 0.35rem; }
+  .role-head h3 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.15rem; margin: 0; }
+  .role-head .dates { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.76rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .org { font-size: 0.88rem; color: var(--accent); margin: 0 0 0.6rem; }
+  .timeline-item ul.bullets { margin: 0; padding-left: 1.1rem; color: var(--ink); }
+  .timeline-item ul.bullets li { margin-bottom: 0.3rem; font-size: 0.94rem; }
+  .timeline-item ul.bullets li:last-child { margin-bottom: 0; }
+
+  /* ---------- Education ---------- */
+  .edu-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.1rem; }
+  .edu-list h3 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.05rem; margin: 0 0 0.2rem; }
+  .edu-list p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+  /* ---------- Skills ---------- */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.75rem 2rem; }
+  .skills-grid h3 { font-family: "Public Sans", sans-serif; font-weight: 600; font-size: 0.9rem; margin: 0 0 0.6rem; }
+  .chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .chips li {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.74rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    padding: 0.22rem 0.55rem;
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---------- Projects ---------- */
+  .projects .intro p { max-width: 66ch; font-size: 1rem; color: var(--muted); margin: 0 0 2rem; }
+  .project-list { display: grid; gap: 1.9rem; }
+  article.project { padding: 1.5rem 1.6rem; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; box-shadow: var(--shadow); }
+  .project-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.4rem 1rem; margin-bottom: 0.6rem; }
+  .project-head h3 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.25rem; margin: 0; }
+  .project-head h3 a { color: var(--ink); }
+  .project-head h3 a:hover { color: var(--accent); }
+  .project-meta { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.74rem; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .project p.desc { margin: 0 0 0.9rem; color: var(--ink); max-width: 68ch; }
+  .project .chips li { background: var(--surface-2); }
+
+  /* ---------- Elsewhere ---------- */
+  .more-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem 2rem; }
+  .more-grid h3 { font-size: 0.88rem; font-weight: 600; margin: 0 0 0.35rem; }
+  .more-grid p { margin: 0; font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+  .more-grid a { color: var(--ink); }
+  .more-grid a:hover { color: var(--accent); }
+  .more-grid .tail { color: var(--muted); font-style: normal; }
+  .profile-link { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 0.8rem; margin-top: 1.25rem; display: inline-block; }
+
+  /* ---------- Contact / Footer ---------- */
+  .contact p { max-width: 60ch; color: var(--muted); margin: 0 0 1.25rem; }
+  .contact-row.large { font-size: 0.92rem; gap: 0.6rem 1.4rem; }
+
+  footer.page-footer {
+    padding: 1.75rem 0 0;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 0.76rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  footer.page-footer a { color: var(--muted); }
+  footer.page-footer a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">M.U.</a>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <header id="top" class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="role">FULL-STACK &amp; SYSTEMS ENGINEER</p>
+        <h1>Miloš Uršulović</h1>
+        <p class="tagline">
+          I keep real IT infrastructure running for a healthcare institution
+          by day, ship full-stack software across half a dozen stacks, and
+          build systems from scratch — OS kernel, TCP/IP stack, load
+          balancer — when I want to know exactly how the layer underneath
+          actually works.
+        </p>
+        <ul class="contact-row">
+          <li><a href="mailto:milosursulovic2696@gmail.com">milosursulovic2696@gmail.com</a></li>
+          <li><a href="tel:+381611483576">+381 61 148 3576</a></li>
+          <li>Bor, Serbia</li>
+          <li><a href="https://github.com/milosursulovic" target="_blank" rel="noopener">github.com/milosursulovic</a></li>
+          <li><a href="https://www.linkedin.com/in/milos-ursulovic-a925201b3/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+      <figure class="portrait">
+        <img src="photo.jpg" alt="Portrait of Miloš Uršulović" />
+        <figcaption>Bor, Serbia</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <section id="about" class="about">
+    <h2 class="eyebrow">About</h2>
+    <p>
+      Software Engineer and network-oriented IT professional with experience
+      spanning systems administration, software development, and cloud
+      platforms. Comfortable working across the application, system, and
+      network layers — designing and securing infrastructure on one side,
+      shipping maintainable software on the other, and using each to
+      understand the other better.
+    </p>
+    <p>
+      Outside of work that curiosity turns into from-scratch systems
+      projects: a hand-written OS kernel with its own TCP/IP stack, a
+      Go load balancer, a miniature cloud platform. See
+      <a href="#projects">Projects</a> below.
+    </p>
+  </section>
+
+  <section id="experience">
+    <h2 class="eyebrow">Experience</h2>
+    <ol class="timeline">
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Programmer / Information Systems &amp; Network Engineer</h3>
+          <span class="dates">Dec 2025 — Present</span>
+        </div>
+        <p class="org">Bor Health Center, Bor, Serbia</p>
+        <ul class="bullets">
+          <li>Build and maintain internal applications end to end — backend services, databases, system integrations</li>
+          <li>Administer Windows/Linux servers and IT infrastructure; configure and troubleshoot LAN/WAN, TCP/IP, VLANs, firewalls</li>
+          <li>Own backup, monitoring, disaster recovery, and user access/security policy across the environment</li>
+        </ul>
+      </li>
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Information Systems &amp; Technology Administrator</h3>
+          <span class="dates">Apr 2024 — Dec 2025</span>
+        </div>
+        <p class="org">Bor General Hospital, Bor, Serbia</p>
+        <ul class="bullets">
+          <li>Administered and monitored server and network infrastructure; installed and maintained Windows/Linux systems</li>
+          <li>Managed user accounts, access rights, and security policy; ran backup and disaster-recovery procedures</li>
+          <li>Monitored performance and availability, maintained technical documentation, coordinated with vendors</li>
+        </ul>
+      </li>
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Information Systems &amp; Technology Support Administrator</h3>
+          <span class="dates">Feb 2024 — Apr 2024</span>
+        </div>
+        <p class="org">Bor Hospital, Bor, Serbia</p>
+        <ul class="bullets">
+          <li>Level 1/2 help desk — workstation, peripheral, and software installation; OS, network, and application troubleshooting</li>
+          <li>Logged and resolved tickets, trained users, coordinated with sysadmins and developers</li>
+        </ul>
+      </li>
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Full Stack Developer</h3>
+          <span class="dates">May 2023 — Feb 2024</span>
+        </div>
+        <p class="org">Zanix, Niš, Serbia</p>
+        <ul class="bullets">
+          <li>Built full-stack web applications with Laravel and MySQL, Vue.js and Tailwind CSS on the frontend</li>
+          <li>Developed REST APIs and system integrations; optimized performance and hardened security</li>
+        </ul>
+      </li>
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Software Developer</h3>
+          <span class="dates">Oct 2021 — Oct 2022</span>
+        </div>
+        <p class="org">BeeIT, Novi Sad, Serbia</p>
+        <ul class="bullets">
+          <li>Salesforce Commerce Cloud storefront development on SFRA — customization, feature work, third-party integrations</li>
+          <li>Built CI/CD pipelines and automated deployments; optimized performance and troubleshot production issues</li>
+        </ul>
+      </li>
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Android Developer</h3>
+          <span class="dates">Mar 2021 — Oct 2021</span>
+        </div>
+        <p class="org">VD System, Niš, Serbia</p>
+        <ul class="bullets">
+          <li>Kotlin apps on Jetpack components and MVVM architecture; REST API integration, local storage, performance tuning</li>
+        </ul>
+      </li>
+
+      <li class="timeline-item">
+        <div class="role-head">
+          <h3>Android Developer</h3>
+          <span class="dates">Feb 2020 — Mar 2021</span>
+        </div>
+        <p class="org">Aldutek, Niš, Serbia</p>
+        <ul class="bullets">
+          <li>Java apps on legacy Android SDK, Activity/Fragment architecture; SQLite storage, bug fixing, OS-compatibility updates</li>
+        </ul>
+      </li>
+
+    </ol>
+  </section>
+
+  <section id="education">
+    <h2 class="eyebrow">Education</h2>
+    <ul class="edu-list">
+      <li>
+        <h3>Vocational Engineer of Modern Computer Technologies</h3>
+        <p>College of Applied Computer Sciences, Niš</p>
+      </li>
+      <li>
+        <h3>Mechanical and Electrical School</h3>
+        <p>Bor, Serbia</p>
+      </li>
+    </ul>
+  </section>
+
+  <section id="skills">
+    <h2 class="eyebrow">Skills</h2>
+    <div class="skills-grid">
+      <div>
+        <h3>Systems &amp; Infrastructure</h3>
+        <ul class="chips">
+          <li>Windows Server</li><li>Linux</li><li>TCP/IP &amp; networking</li>
+          <li>VLANs / firewalls</li><li>Backup &amp; DR</li><li>C</li>
+          <li>x86-64 asm</li><li>AVR / embedded</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Backend</h3>
+        <ul class="chips">
+          <li>Go</li><li>Node.js / Express</li><li>C# / .NET</li>
+          <li>Laravel</li><li>PostgreSQL</li><li>MySQL</li>
+          <li>REST APIs</li><li>JWT / RBAC</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Frontend</h3>
+        <ul class="chips">
+          <li>Vue 3</li><li>React</li><li>Tailwind CSS</li>
+          <li>HTML5</li><li>CSS</li><li>JavaScript</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mobile</h3>
+        <ul class="chips">
+          <li>Kotlin</li><li>Java</li><li>Android SDK</li>
+          <li>Android Jetpack</li><li>Jetpack Compose</li><li>MVVM</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Tools &amp; Practice</h3>
+        <ul class="chips">
+          <li>Git</li><li>CI/CD</li><li>SQL</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2 class="eyebrow">Featured Projects</h2>
+    <div class="intro"><p>Pinned on GitHub, in this order, by personal priority.</p></div>
+
+    <div class="project-list">
+
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/milosursulovic/minic-os" target="_blank" rel="noopener">minic-os</a></h3>
+          <span class="project-meta">C · updated Sep 2026</span>
+        </div>
+        <p class="desc">
+          A kernel written entirely from scratch: 64-bit long mode, a
+          real heap and paging with per-process address-space isolation,
+          a preemptive scheduler, a ring0/ring3 syscall boundary with a
+          capability model, a custom filesystem, a full TCP/IP stack
+          (verified with a genuine HTTP round trip to the internet), and
+          a graphics framebuffer — all verified running in QEMU.
+        </p>
+        <ul class="chips"><li>C</li><li>x86-64</li><li>OS kernel</li><li>TCP/IP</li></ul>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/milosursulovic/net-desk" target="_blank" rel="noopener">net-desk</a></h3>
+          <span class="project-meta">Vue / Node / C# · updated Sep 2026</span>
+        </div>
+        <p class="desc">
+          A network and hardware inventory tool that grew into a full
+          RMM system: a Windows agent with heartbeat monitoring, remote
+          commands, alerting, and auto-update via signed packages with
+          automatic rollback.
+        </p>
+        <ul class="chips"><li>Vue 3</li><li>Express</li><li>MySQL</li><li>C# / .NET</li><li>PWA</li></ul>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/milosursulovic/nebula" target="_blank" rel="noopener">nebula</a></h3>
+          <span class="project-meta">Go · updated Sep 2026</span>
+        </div>
+        <p class="desc">
+          A miniature cloud infrastructure platform — conceptually a
+          blend of EC2, OpenStack, Kubernetes' control plane, Nomad, and
+          Proxmox. JWT/refresh auth, per-tenant RBAC, graceful shutdown,
+          fail-fast configuration.
+        </p>
+        <ul class="chips"><li>Go</li><li>PostgreSQL</li><li>JWT</li><li>REST API</li></ul>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/milosursulovic/vortex" target="_blank" rel="noopener">vortex</a></h3>
+          <span class="project-meta">Go · active development</span>
+        </div>
+        <p class="desc">
+          An L4/L7 (TCP/HTTP) load balancer built from scratch: backend
+          pool, health checking, TLS, resilience, and observability,
+          phased out of a full design spec.
+        </p>
+        <ul class="chips"><li>Go</li><li>TCP proxy</li><li>Load balancing</li></ul>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/milosursulovic/shop-daily" target="_blank" rel="noopener">shop-daily</a></h3>
+          <span class="project-meta">Kotlin · 3 stars</span>
+        </div>
+        <p class="desc">
+          An e-commerce Android app built on Clean Architecture and
+          MVVM: Jetpack Compose UI, Dagger Hilt for DI, Coroutines and
+          Flow for async state, Moshi for serialization.
+        </p>
+        <ul class="chips"><li>Kotlin</li><li>Jetpack Compose</li><li>Clean Architecture</li><li>MVVM</li></ul>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3><a href="https://github.com/milosursulovic/vnc" target="_blank" rel="noopener">vnc</a></h3>
+          <span class="project-meta">C · updated Aug 2026</span>
+        </div>
+        <p class="desc">
+          A minimal VNC (RFB 3.8) implementation for Windows — a server
+          that captures the screen and runs as a Windows service, plus a
+          CLI viewer with a live GUI display.
+        </p>
+        <ul class="chips"><li>C</li><li>Windows API</li><li>RFB / VNC</li></ul>
+      </article>
+
+    </div>
+
+    <h2 class="eyebrow" style="margin-top: 3rem;">Elsewhere on GitHub</h2>
+    <div class="more-grid">
+      <div>
+        <h3>Embedded</h3>
+        <p>
+          <a href="https://github.com/milosursulovic/myos" target="_blank" rel="noopener">myos</a> —
+          bare-metal OS for the Arduino Uno (ATmega328P), no Arduino
+          framework, custom bootloader and scheduler.
+        </p>
+      </div>
+      <div>
+        <h3>Android / Kotlin <span class="tail">(13)</span></h3>
+        <p>
+          <a href="https://github.com/milosursulovic/spotify-clone" target="_blank" rel="noopener">spotify-clone</a>,
+          video-editor, weather-app, and more.
+        </p>
+      </div>
+      <div>
+        <h3>Web (Vue / React / Node) <span class="tail">(16)</span></h3>
+        <p>
+          <a href="https://github.com/milosursulovic/machinero" target="_blank" rel="noopener">machinero</a>,
+          <a href="https://github.com/milosursulovic/bug-tracker-firestore" target="_blank" rel="noopener">bug-tracker-firestore</a>,
+          plus practice repos across Next.js, htmx, Express, and
+          microservices.
+        </p>
+      </div>
+      <div>
+        <h3>.NET / C#</h3>
+        <p>
+          <a href="https://github.com/milosursulovic/finshark" target="_blank" rel="noopener">finshark</a>,
+          <a href="https://github.com/milosursulovic/aspnet-webapi-2022" target="_blank" rel="noopener">aspnet-webapi-2022</a>
+        </p>
+      </div>
+    </div>
+    <a class="profile-link" href="https://github.com/milosursulovic?tab=repositories" target="_blank" rel="noopener">→ all repositories</a>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2 class="eyebrow">Contact</h2>
+    <p>Based in Bor, Serbia. Open to backend, systems, and infrastructure work.</p>
+    <ul class="contact-row large">
+      <li><a href="mailto:milosursulovic2696@gmail.com">milosursulovic2696@gmail.com</a></li>
+      <li><a href="tel:+381611483576">+381 61 148 3576</a></li>
+      <li><a href="https://github.com/milosursulovic" target="_blank" rel="noopener">github.com/milosursulovic</a></li>
+      <li><a href="https://www.linkedin.com/in/milos-ursulovic-a925201b3/" target="_blank" rel="noopener">LinkedIn</a></li>
+    </ul>
+  </section>
+
+  <footer class="page-footer">
+    <span>40 public repositories on GitHub</span>
+    <a href="#top">↑ back to top</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
